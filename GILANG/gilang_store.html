@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAVRIORS</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Reset Margin dan Padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Menata Body */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eaeaea; /* Latar belakang abu-abu terang */
+            color: #333;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Header */
+        header {
+            background-color: #1f2833; /* Gelap, hampir hitam */
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        #cart button {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        #cart button:hover {
+            background-color: #2ecc71;
+            transform: scale(1.05);
+        }
+
+        /* Section Produk */
+        .products {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin: 30px auto;
+            max-width: 1200px;
+            gap: 30px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product img:hover {
+            transform: scale(1.1);
+        }
+
+        .product h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin: 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product p {
+            font-size: 1.1em;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+
+        .product button {
+            background-color: #2980b9;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .product button:hover {
+            background-color: #3498db;
+            transform: scale(1.1);
+        }
+
+        /* Keranjang Belanja */
+        #shopping-cart {
+            background-color: #fff;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        #shopping-cart.open {
+            display: block;
+        }
+
+        #shopping-cart h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        #cart-items {
+            list-style-type: none;
+            margin-bottom: 20px;
+        }
+
+        #cart-items li {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        #total {
+            font-size: 1.5em;
+            text-align: center;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        #shopping-cart button {
+            background-color: #e74c3c;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+
+        #shopping-cart button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Checkout Button */
+        #checkout-button {
+            background-color: #f39c12;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        #checkout-button:hover {
+            background-color: #e67e22;
+        }
+
+        /* Metode Pembayaran */
+        #payment-method {
+            display: none;
+            text-align: center;
+        }
+
+        #payment-method.open {
+            display: block;
+        }
+
+        #payment-method h3 {
+            margin-bottom: 20px;
+        }
+
+        .payment-option {
+            background-color: #2980b9;
+            color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .payment-option:hover {
+            transform: scale(1.05);
+            background-color: #3498db;
+        }
+
+        #payment-confirmation {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #payment-confirmation.open {
+            display: block;
+        }
+
+        #payment-confirmation h4 {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        /* Pilihan Kurir */
+        #courier-selection {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #courier-selection.open {
+            display: block;
+        }
+
+        .courier-option {
+            background-color: #2980b9;
+            color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .courier-option:hover {
+            transform: scale(1.05);
+            background-color: #3498db;
+        }
+
+        #courier-confirmation {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #courier-confirmation.open {
+            display: block;
+        }
+
+        #courier-confirmation h4 {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>WELCOME TO SAVRIORS STORE</h1>
+        <div id="cart">
+            <button onclick="toggleCart()">Keranjang <span id="cart-count">0</span> item</button>
+        </div>
+    </header>
+
+    <section class="products">
+        <!-- Produk 1 -->
+        <div class="product">
+            <img src="dcd154592ce1f6d8235ddd53fa9e7521.jpg_720x720q80.jpg" alt="bape shark orange">
+            <h3>BAPE SHARK ORANGE</h3>
+            <p>Harga: Rp 35.000.000</p>
+            <p>Sisa Stok: <span class="stock">5</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('bape shark orange', 35000000, document.getElementById('size-1').value)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 2 -->
+        <div class="product">
+            <img src="634d0e2d194e7440c3499ac8-nike-air-jordan-1-high-og-unc-university.jpg" alt="nike jordan high blue ocean">
+            <h3>NIKE JORDAN HIGH BLUE OCEAN</h3>
+            <p>Harga: Rp 8.000.000</p>
+            <p>Sisa Stok: <span class="stock">8</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+            </select>
+            <button onclick="addToCart('nike jordan high blue ocean', 8000000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 3 -->
+        <div class="product">
+            <img src="id-11134207-7r98s-lpz8m0aaxg66e0.jpg" alt="CHMB BLESSED">
+            <h3>CHMB BLESSED</h3>
+            <p>Harga: Rp 850.000</p>
+            <p>Sisa Stok: <span class="stock">12</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('CHMB BLESSED', 850000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 4 -->
+        <div class="product">
+            <img src="sg-11134201-7rd55-lud9po4h9ucjb4.jpg" alt="VANE GLOCK">
+            <h3>VANE GLOCK</h3>
+            <p>Harga: Rp 450.000</p>
+            <p>Sisa Stok: <span class="stock">7</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('VANE GLOCK', 450000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 5 (Tengah) -->
+        <div class="product center-product">
+            <img src="Hellstar-Studios-Heaven-Sounds-T-Shirt-1-2.png" alt="NEW PRODUCT">
+            <h3>HELLSTAR STUDIOS</h3>
+            <p>Harga: Rp 1.200.000</p>
+            <p>Sisa Stok: <span class="stock">10</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('HELLSTAR STUDIOS', 1200000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 6 -->
+        <div class="product">
+            <img src="8d24fc5f-61d1-40f3-8ae8-32e5cca5ec84.jpg" alt="NEW PRODUCT 6">
+            <h3>RUCAS SEASON 8</h3>
+            <p>Harga: Rp 2.500.000</p>
+            <p>Sisa Stok: <span class="stock">3</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+            </select>
+            <button onclick="addToCart('RUCAS SEASON 8', 2500000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 7 -->
+        <div class="product">
+            <img src="k9_620x.webp" alt="CHROME HEARTS SHORT">
+            <h3>CHROME HEARTS SHORT </h3>
+            <p>Harga: Rp 4.500.000</p>
+            <p>Sisa Stok: <span class="stock">6</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+            </select>
+            <button onclick="addToCart('CHROME HEARTS SHORT', 4500000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 8 -->
+        <div class="product">
+            <img src="PW_4420.jpg" alt="NEW PRODUCT 6">
+            <h3>PHILIP WORKS MORE-MILES </h3>
+            <p>Harga: Rp 900.000</p>
+            <p>Sisa Stok: <span class="stock">4</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('PHILIP WORKS MORE-MILES', 900000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 9 -->
+        <div class="product">
+            <img src="snsm.jpg" alt="NEW PRODUCT 6">
+            <h3>MIRACLE+SNSB </h3>
+            <p>Harga: Rp 900.000</p>
+            <p>Sisa Stok: <span class="stock">20</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('MIRACLE+SNSB', 900000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <!-- Produk 10 -->
+        <div class="product">
+            <img src="Chrome_Hearts_Hoodie_Multiple_Cross___Black-removebg-preview.webp" alt="NEW PRODUCT 6">
+            <h3>CHROME HEARTS HOODIE </h3>
+            <p>OUT OF STOCK</p>
+            <p>Sisa Stok: <span class="stock">0</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
+    
+        <!-- Produk 11 -->
+        <div class="product">
+            <img src="1-4.jpg" alt="NEW PRODUCT 6">
+            <h3>CHROME HEARTS HOODIE MULTICOLOR </h3>
+            <p>SOLDOUT</p>
+            <p>Sisa Stok: <span class="stock">0</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+        </div>
+    
+        <!-- Produk 12 -->
+        <div class="product">
+            <img src="u1_31fdfb3c-1be7-4744-96d6-afea7f2c8150_1200x1200.webp" alt="NEW PRODUCT 6">
+            <h3>Air Jordan 1 Retro High “Off-White - UNC”  </h3>
+            <p>Harga: Rp 30.000.000</p>
+            <p>Sisa Stok: <span class="stock">2</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+                <option value="33">33</option>
+            </select>
+            <button onclick="addToCart('Air Jordan 1 Retro High “Off-White - UNC”', 30000000)">Tambah ke Keranjang</button>
+        </div>
+    
+        <div class="product">
+            <img src="id-11134207-7r98p-luubdir8bnoda2.jpg" alt="CHMB BLESSED">
+            <h3>TELEPATI.CHE KISS ME BLACK</h3>
+            <p>Harga: Rp 900.000</p>
+            <p>Sisa Stok: <span class="stock">5</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('TELEPATI.CHE KISS ME BLACK', 900000)">Tambah ke Keranjang</button>
+        </div>
+
+        <div class="product">
+            <img src="hoodie_justin_bieber_tour_sand_1677810312_fc12edf7.jpg" alt="CHMB BLESSED">
+            <h3>HOODIE JUSTIN BIEBER PURPOSE TOUR</h3>
+            <p>Harga: Rp 3.000.000</p>
+            <p>Sisa Stok: <span class="stock">3</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('HOODIE JUSTIN BIEBER PURPOSE TOUR', 900000)">Tambah ke Keranjang</button>
+        </div>
+
+        <div class="product">
+            <img src="7c42d43b18ab87253e6d1bcb3245cfa9.jpg" alt="CHMB BLESSED">
+            <h3>PLAIN WHITE SKIMASK</h3>
+            <p>Harga: Rp 250.000</p>
+            <p>Sisa Stok: <span class="stock">20</span></p> <!-- Menambahkan stok -->
+            <!-- Dropdown Ukuran -->
+            <select id="size-1">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select>
+            <button onclick="addToCart('PLAIN WHITE SKIMASK', 900000)">Tambah ke Keranjang</button>
+        </div>
+    </section>
+    
+    
+    
+
+    <!-- Keranjang Belanja -->
+    <section id="shopping-cart" class="cart-container">
+        <h2>Keranjang Belanja</h2>
+        <ul id="cart-items">
+            <li>Keranjang kosong</li>
+        </ul>
+        <p id="total">Total: Rp 0</p>
+        <button onclick="clearCart()">Kosongkan Keranjang</button>
+        <button id="checkout-button" onclick="showPaymentMethod()" style="display:none;">Checkout</button>
+    </section>
+
+    <!-- Metode Pembayaran -->
+    <section id="payment-method" class="payment-method">
+        <h3>Pilih Metode Pembayaran</h3>
+        <div class="payment-option" onclick="confirmPayment('Transfer Bank')">Transfer Bank</div>
+        <div class="payment-option" onclick="confirmPayment('Kartu Kredit')">Kartu Kredit</div>
+        <div class="payment-option" onclick="confirmPayment('E-wallet')">E-wallet (OVO, DANA, dll.)</div>
+        <div class="payment-option" onclick="confirmPayment('BANK BCA')">BANK BCA</div>
+        <div class="payment-option" onclick="confirmPayment('BANK BJB')">BANK BJB</div>
+    </section>
+
+    <!-- Konfirmasi Pembayaran -->
+    <section id="payment-confirmation">
+        <h4>Terima kasih atas pembayaran Anda. Pembayaran sedang diproses.</h4>
+        <button onclick="showCourierSelection()">Pilih Kurir</button>
+    </section>
+
+    <!-- Pilihan Kurir -->
+    <section id="courier-selection" class="courier-selection">
+        <h3>Pilih Kurir</h3>
+        <div class="courier-option" onclick="confirmCourier('JNE')">JNE</div>
+        <div class="courier-option" onclick="confirmCourier('TIKI')">TIKI</div>
+        <div class="courier-option" onclick="confirmCourier('Gojek')">Gojek</div>
+        <div class="courier-option" onclick="confirmCourier('J&T')">J&T</div>
+    </section>
+
+    <!-- Konfirmasi Pengiriman -->
+    <section id="courier-confirmation">
+        <h4>Pengiriman Anda sedang diproses dengan kurir yang Anda pilih.</h4>
+    </section>
+
+    <!-- Skrip untuk Interaksi -->
+    <script>
+        let cart = [];
+        let cartCount = document.getElementById('cart-count');
+        let cartItems = document.getElementById('cart-items');
+        let totalPrice = document.getElementById('total');
+        let checkoutButton = document.getElementById('checkout-button');
+        let paymentMethodSection = document.getElementById('payment-method');
+        let paymentConfirmation = document.getElementById('payment-confirmation');
+        let courierSelection = document.getElementById('courier-selection');
+        let courierConfirmation = document.getElementById('courier-confirmation');
+
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            updateCart();
+        }
+
+        function updateCart() {
+            // Menghitung total dan menampilkan daftar produk di keranjang
+            let total = 0;
+            cartItems.innerHTML = ''; // Menghapus item yang ada sebelumnya
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<li>Keranjang kosong</li>';
+                checkoutButton.style.display = 'none'; // Hide checkout button if cart is empty
+            } else {
+                cart.forEach(item => {
+                    let li = document.createElement('li');
+                    li.textContent = `${item.name} - Rp ${item.price.toLocaleString()}`;
+                    cartItems.appendChild(li);
+                    total += item.price;
+                });
+                checkoutButton.style.display = 'block'; // Show checkout button if cart is not empty
+            }
+
+            // Update total harga dan jumlah item di keranjang
+            totalPrice.textContent = `Total: Rp ${total.toLocaleString()}`;
+            cartCount.textContent = cart.length;
+        }
+
+        function toggleCart() {
+            let cartSection = document.getElementById('shopping-cart');
+            cartSection.classList.toggle('open');
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+
+        function showPaymentMethod() {
+            paymentMethodSection.classList.add('open');
+            toggleCart(); // Hide the shopping cart
+        }
+
+        function confirmPayment(method) {
+            paymentMethodSection.classList.remove('open');
+            paymentConfirmation.classList.add('open');
+            alert(`Pembayaran dengan ${method} sedang diproses.`);
+        }
+
+        function showCourierSelection() {
+            paymentConfirmation.classList.remove('open');
+            courierSelection.classList.add('open');
+        }
+
+        function confirmCourier(courier) {
+            courierSelection.classList.remove('open');
+            courierConfirmation.classList.add('open');
+            alert(`Pengiriman akan dilakukan oleh ${courier}.`);
+        }
+    </script>
+
+</body>
+</html>
